@@ -3,22 +3,21 @@ public:
     
     int search(vector<int>& nums, int target) {
         
-        //intitiale start and end 
-        int s = 0;
-        int e = nums.size() - 1;
-        while(s<=e)
+        //initialise starting and ending 
+        int i=0, e=nums.size()-1;
+        while(i<=e)
         {
-            int mid = s + (e-s)/2;
+            int mid = i + (e-i)/2;
             if(nums[mid] == target)
             {
                 return mid;
             }
-            else if ( nums[mid] > target )
+            else if (nums[mid] > target)
             {
-                e = mid - 1;
+                e = mid-1;
             }
             else{
-                s = mid + 1;
+                i = mid+1;
             }
         }
         return -1;
