@@ -93,7 +93,7 @@ struct Node
 
 class Solution {
   public:
-  int height(Node* root)
+  /*int height(Node* root)
   {
       if(root == NULL)
       {
@@ -103,8 +103,24 @@ class Solution {
       int right = height(root->right);
       return max(left,right)+1;
   }
+  */
+  pair<int,int> diameterfast(Node* root)
+  {
+      if(root == NULL)
+      {
+          return make_pair(0,0);
+      }
+      pair<int,int> left = diameterfast(root->left);
+      pair<int,int> right = diameterfast(root->right);
+      int op1 = left.first;
+      int op2 = right.first;
+      int op3 = left.second+right.second+1;
+      return make_pair(max(op1,max(op2,op3)),max(left.second,right.second)+1);
+  }
     // Function to return the diameter of a Binary Tree.
     int diameter(Node* root) {
+        
+        /*
         if(root == NULL)
         {
             return 0;
@@ -115,6 +131,11 @@ class Solution {
         // Your code here
         int op3 = height(root->left) + 1 + height(root->right);
         return max(op1,max(op2,op3));
+        */
+        
+        
+        return diameterfast(root).first;
+        
     }
 };
 
