@@ -102,36 +102,35 @@ struct Node
  */
 
 class Solution{
-    public:
-    pair<bool,int> balance(Node* root)
+    private:
+    pair<bool,int> solve(Node* root)
     {
         if(root == NULL)
         {
             pair<bool,int> p = make_pair(true,0);
             return p;
         }
-        
-        pair<bool,int> left = balance(root->left);
-        pair<bool,int> right = balance(root->right);
-        bool leftans = left.first;
-        bool rightans = right.first;
-        bool diff = abs(left.second - right.second)<=1;
-        pair<bool,int> ans ;
-        if(leftans && rightans && diff)
+        pair<bool,int> leftans = solve(root->left);
+        pair<bool,int> rightans = solve(root->right);
+        int diff = abs(leftans.second - rightans.second) <=1;
+        if(leftans.first && rightans.first && diff)
         {
-            ans.first = true;
-            ans.second = max(left.second,right.second) + 1;
+            pair<bool,int> p = make_pair(true,max(leftans.second,rightans.second)+1);
+            
+            return p;
         }
         else{
-            ans.first = false;
-            ans.second = max(left.second,right.second)+1;
+            pair<bool,int> p  = make_pair(false,10);
+            return p;
         }
-        return ans;
     }
+    public:
+    //Function to check whether a binary tree is balanced or not.
     bool isBalanced(Node *root)
     {
+        pair<bool,int> p = solve(root);
+        return p.first;
         
-        return balance(root).first;
     }
 };
 
