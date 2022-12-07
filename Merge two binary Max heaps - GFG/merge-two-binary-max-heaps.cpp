@@ -11,26 +11,47 @@ using namespace std;
 // User function Template for C++
 
 class Solution{
+    private:
+    void heapify(vector<int> &arr,int n,int i)
+    {
+        int largest = i;
+        int left = 2*i+1;
+        int right = 2*i+2;
+        if(left<n && arr[left] > arr[largest])
+        {
+            largest = left;
+        }
+        if(right<n && arr[right] > arr[largest])
+        {
+            largest = right;
+        }
+        if(largest!=i)
+        {
+            swap(arr[i],arr[largest]);
+            heapify(arr,n,largest);
+        }
+    }
+    
     public:
     vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
         // your code here
-        priority_queue<int> pq;
+        vector<int> ans;
         for(auto i:a)
         {
-            pq.push(i);
+            ans.push_back(i);
         }
         for(auto i:b)
         {
-            pq.push(i);
+            ans.push_back(i);
         }
-        vector<int> ans;
-        while(!pq.empty())
+        int size = ans.size();
+        for(int i=size/2;i>=0;i--)
         {
-            int ele = pq.top();
-            pq.pop();
-            ans.push_back(ele);
-            
+            heapify(ans,size,i);
         }
+        // for(auto i:ans){
+        //     cout<<i<<" ";
+        // }
         return ans;
     }
 };
