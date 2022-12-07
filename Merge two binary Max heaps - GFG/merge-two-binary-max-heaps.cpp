@@ -45,7 +45,7 @@ class Solution{
             ans.push_back(i);
         }
         int size = ans.size();
-        for(int i=size/2;i>=0;i--)
+        for(int i=size/2-1;i>=0;i--)
         {
             heapify(ans,size,i);
         }
