@@ -1,21 +1,37 @@
 class Solution {
 public:
-    int coinChange(vector<int>& coins, int n) {
-        // creating the base dp array, with first value set to 0
-        int dp[++n];
-        dp[0] = 0;
-        // more convenient to have the coins sorted
-        sort(begin(coins), end(coins));
-        // populating our dp array
-        for (int i = 1; i < n; i++) {
-            // setting dp[0] base value to 1, 0 for all the rest
-            dp[i] = INT_MAX;
-            for (int c: coins) {
-                if (i - c < 0) break;
-                // if it was a previously not reached cell, we do not add use it
-                if (dp[i - c] != INT_MAX) dp[i] = min(dp[i], 1 + dp[i - c]);
+    int recursion(vector<int>& coins, int amount){
+        if(amount==0) return 0;
+        if(amount<0) return INT_MAX;
+        int ans=INT_MAX;
+        for(int i=0; i<coins.size(); i++){
+            int temp = recursion(coins, amount-coins[i]);
+            if(temp!=INT_MAX) ans = min(ans, 1+temp);
+        }
+        return ans;
+        
+    }
+    
+    int recursion_memoization(vector<int>& coins, int amount, vector<int>& dp){
+        if(amount==0) return 0;
+        if(amount<0) return INT_MAX;
+        if(dp[amount]!=-1) return dp[amount];
+        int ans=INT_MAX;
+        for(int i=0; i<coins.size(); i++){
+            int temp = recursion_memoization(coins, amount-coins[i], dp);
+            if(temp!=INT_MAX){
+                ans = min(ans, 1+temp); 
             }
         }
-        return dp[--n] == INT_MAX ? -1 : dp[n];
+        dp[amount]=ans;
+        return ans;
+        
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        // int ans = recursion(coins, amount);
+        vector<int> dp(amount+1, -1);
+        int ans = recursion_memoization(coins, amount, dp);
+        if(ans==INT_MAX) return -1;
+        return ans;
     }
 };
