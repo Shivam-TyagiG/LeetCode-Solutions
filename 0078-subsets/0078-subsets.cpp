@@ -5,9 +5,11 @@ public:
             ans.push_back(output);
             return ;
         }
-        solve(nums, ans, output, i+1);
         output.push_back(nums[i]);
         solve(nums, ans, output, i+1);
+        output.pop_back();
+        solve(nums, ans, output, i+1);
+        
     }
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> ans;
