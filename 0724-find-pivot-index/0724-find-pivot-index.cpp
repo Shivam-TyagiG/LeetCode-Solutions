@@ -7,12 +7,9 @@ public:
         {
             total =  total + num;
         }
-        cout<<total<<endl;
         int curr=0,count =0;
         for(auto num : nums)
         {
-            
-            
             if(curr*2 == total-num){
                 return count;
             }
