@@ -10,7 +10,7 @@ public:
 	int search(int A[], int N){
 	    //code
 	    int ans = 0;
-	    for(int i=1; i<N; i++){
+	    for(int i=0; i<N; i++){
 	        ans = ans^A[i];
 	    }
 	    return ans;
