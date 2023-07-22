@@ -10,24 +10,18 @@ using namespace std;
 
 class Solution {
   public:
+    int solve(int arr[], int low, int high, int k){
+        if(high<low) return -1;
+        int mid = low+high;
+        if(arr[mid]==k) return mid;
+        else if(arr[mid]<k) return solve(arr, mid+1, high, k);
+        else return solve(arr, low, mid-1, k);
+    }
     int binarysearch(int arr[], int n, int k) {
-        int s=0,e=n-1;
-        while(s<=e)
-        {
-            int mid = s+(e-s)/2;
-            if(arr[mid] == k)
-            {
-                return mid;
-            }
-            else if (arr[mid] > k)
-            {
-                e=mid-1;
-            }
-            else{
-                s=mid+1;
-            }
-        }
-        return -1;
+        // code here
+        int l=0;
+        int high=n-1;
+        return solve(arr, l, high, k);
     }
 };
 
