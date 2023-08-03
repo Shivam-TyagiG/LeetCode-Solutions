@@ -10,63 +10,31 @@
  */
 class Solution {
 public:
-     ListNode* reverse(ListNode* head)
-    {
-        if(head == NULL || head->next == NULL) return head;
-        ListNode* current = head;
-        ListNode* prev = NULL;
-        ListNode* after = NULL;
-        while(current != NULL)
-        {
-            after = current->next;
-            current->next = prev;
-            prev = current;
-            current = after;
-        }
-        return prev;
-    }
-    void insert(ListNode* &ansH , ListNode* &ansT, int data)
-    {
-        if(ansH == NULL)
-        {
-            ListNode* temp = new ListNode(data);
-            ansH = temp;
-            ansT = temp;
-        }
-        else
-        {
-            ListNode* temp = new ListNode(data);
-            ansT->next = temp;
-            ansT = temp;
-        }
-        
-    }
-    ListNode* add(ListNode* head1 , ListNode* head2)
-    {
-        int carry = 0;
-        ListNode* ansH = NULL ;
-        ListNode* ansT = NULL;
-        while(head1 != NULL || head2 != NULL || carry != 0)
-        {
-            int data = 0;
-            if(head1 != NULL)data += head1->val;
-            if(head2 != NULL) data += head2->val;
-            data += carry;
-            insert(ansH , ansT , data%10);
-            carry = data/10;
-
-            if(head1 != NULL) head1 = head1->next;
-            if(head2 != NULL) head2 = head2->next;
-
-        }
-        return ansH;
-    }
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        
-        // l1 = reverse(l1);
-        // l2 = reverse(l2);
-        ListNode* ans = add(l1 , l2);
-
-        return ans;
+        ListNode* head = NULL;
+        ListNode* tail = NULL;
+        int carry = 0;
+        while(l1 || l2 || carry){
+            int data=0;
+            if(l1)  data+=l1->val;
+            if(l2)  data+=l2->val;
+            data=data+carry;
+            carry = data/10;
+            data = data%10;
+            if(head){
+                ListNode* add = new ListNode(data);
+                tail->next = add;
+                tail=tail->next;
+            }
+            else{
+                ListNode* add = new ListNode(data);
+                head = add;
+                tail = add;
+            }
+            
+            if(l1) l1=l1->next;
+            if(l2) l2=l2->next;
+        }
+        return head;
     }
 };
