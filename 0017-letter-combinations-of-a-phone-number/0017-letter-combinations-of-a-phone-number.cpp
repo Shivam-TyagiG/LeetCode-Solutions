@@ -1,24 +1,6 @@
 class Solution {
 public:
-    
-    // void solve(string digits,string output,vector<string>& ans,int index,string mapping[]){
-        
-    //     if(index>=digits.length()){
-    //         ans.push_back(output);
-    //         return ;
-    //     }
-        
-    //     int number=digits[index] - '0';
-    //     string value  = mapping[number];
-        
-    //     for(int i=0;i<value.length();i++){
-    //         output.push_back(value[i]);
-    //         solve(digits,output,ans,index+1,mapping);
-    //             output.pop_back();
-    //     }
-        
-    // }
-    void solve(vector<string> &ans, string &output, string &s, string *arr, int i)
+     void solve(vector<string> &ans, string &output, string &s, string *arr, int i)
     {
 
         //Base Case
