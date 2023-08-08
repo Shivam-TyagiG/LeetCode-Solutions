@@ -1,41 +1,44 @@
 class Solution {
-public:
-    void conquer(vector<int>& nums, int i, int mid, int j){
-        int first = i, second = mid+1;
-        vector<int> arr;
-        while(first<=mid && second<=j){
-            if(nums[first]<=nums[second]){
-                arr.push_back(nums[first]);
-                first++;
+private:
+    void merge(vector<int>& nums, int low, int mid, int high){
+        int i = low, j = mid+1;
+        vector<int> temp;
+        while(i<=mid && j<=high){
+            if(nums[i]<nums[j]){
+                temp.push_back(nums[i]);
+                i++;
             }
             else{
-                arr.push_back(nums[second]);
-                second++;
+                temp.push_back(nums[j]);
+                j++;
             }
         }
         
-        while(first<=mid){
-            arr.push_back(nums[first]);
-            first++;
-        }
-        while(second<=j){
-            arr.push_back(nums[second]);
-            second++;
+        while(i<=mid){
+            temp.push_back(nums[i]);
+            i++;
         }
         
-        for(int k=i; k<=j; k++){
-            nums[k]=arr[k-i];
+        while(j<=high){
+            temp.push_back(nums[j]);
+            j++;
+        }
+        
+        for(i=low; i<=high; i++){
+            nums[i] = temp[i-low];
         }
     }
-    void divide(vector<int>& nums, int i, int j){
-        if(i>=j) return ;
-        int mid = i+(j-i)/2;
-        divide(nums, i, mid);
-        divide(nums, mid+1, j);
-        conquer(nums, i, mid, j);
+    void divide(vector<int>& nums, int low, int high){
+        if(low>=high) return ;
+        int mid = low+(high-low)/2;
+        divide(nums, low, mid);
+        divide(nums, mid+1, high);
+        merge(nums, low, mid, high);
     }
+public:
     vector<int> sortArray(vector<int>& nums) {
-        divide(nums, 0, nums.size()-1);
+        int k=nums.size()-1;
+        divide(nums, 0, k);
         return nums;
     }
 };
