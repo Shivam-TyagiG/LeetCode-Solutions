@@ -1,8 +1,9 @@
 class Solution {
 private:
     vector<int> temp;
+    int i, j;
     void merge(vector<int>& nums, int low, int mid, int high){
-        int i = low, j = mid+1;
+        i = low, j = mid+1;
         temp.clear();
         while(i<=mid && j<=high){
             if(nums[i]<nums[j]){
