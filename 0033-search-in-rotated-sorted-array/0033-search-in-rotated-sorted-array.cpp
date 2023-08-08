@@ -1,64 +1,51 @@
-int solve(vector<int> nums)
-{
-    int s=0,e=nums.size()-1;
-    while(s<e)
+class Solution {
+ int solve(vector<int> &arr)
     {
-        int mid = s + (e-s)/2;
-        if(nums[mid]>=nums[0])
+        int low = 0;
+        int n = arr.size()-1;
+        int high = n;
+        int mid;
+        while(low<high)
         {
-            s=mid+1;
+            mid = low+(high-low)/2;
+            if(arr[mid] < arr[n])
+            {
+                high = mid;
+            }
+            else{
+                low = mid+1;
+            }
         }
-        else{
-            e=mid;
-        }
+        return low;
     }
-    return s;
-}
-
-int binarysearch(vector<int> nums,int s,int e,int target)
-{
-    while(s<=e)
+public:
+    int search(vector<int>& arr, int target) {
+        int pivot = solve(arr);
+    int n = arr.size() - 1;
+    int low, high;
+    if (target <= arr[n]){
+        low = pivot;
+        high = n;
+    }
+    else{
+        low = 0;
+        high = pivot-1;
+    }
+    cout<<pivot<<endl;
+    while(low<=high)
     {
-        int mid = s + (e-s)/2;
-        
-        if(nums[mid] == target)
+        int mid = low+(high-low)/2;
+        if(arr[mid] == target)
         {
             return mid;
         }
-        else if (nums[mid] > target ){
-            e=mid-1;
-            
+        else if(arr[mid] > target){
+            high = mid-1;
         }
         else{
-            s=mid+1;
+            low = mid+1;
         }
     }
     return -1;
-}
-
-
-class Solution {
-public:
-    int search(vector<int>& nums, int target) {
-        
-        //Find pivot 
-        int pivindex = solve(nums);
-        cout<<pivindex;
-        if(nums[pivindex] == target)
-        {
-            return pivindex;
-        }
-        
-        if(target <= nums[nums.size()-1] && target >= nums[pivindex])
-        {
-            int e=nums.size() - 1;
-            return binarysearch(nums,pivindex,e,target);
-        }
-        else{
-            int s=0;
-            return binarysearch(nums,s,pivindex-1,target);
-        }
-       
-        
     }
 };
