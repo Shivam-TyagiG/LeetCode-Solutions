@@ -1,26 +1,19 @@
 class Solution {
 public:
-    
-    int search(vector<int>& nums, int target) {
-        
-        //initialise starting and ending 
-        int i=0, e=nums.size()-1;
-        while(i<=e)
-        {
-            int mid = i + (e-i)/2;
-            if(nums[mid] == target)
-            {
-                return mid;
-            }
-            else if (nums[mid] > target)
-            {
-                e = mid-1;
-            }
-            else{
-                i = mid+1;
-            }
+    int solve(vector<int>& arr, int target, int low, int high){
+        if(low>high) return -1;
+        int mid = low+(high-low)/2;
+        if(arr[mid]==target) return mid;
+        if(arr[mid]>target){
+            return solve(arr, target, low, mid-1);
         }
-        return -1;
-        
+        else
+        {
+            return solve(arr, target, mid+1, high);
+        }
+    }
+    int search(vector<int>& nums, int target) {
+        int low = 0, high = nums.size()-1;
+        return solve(nums, target, low , high);
     }
 };
