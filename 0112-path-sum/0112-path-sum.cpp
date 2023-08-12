@@ -10,36 +10,21 @@
  * };
  */
 class Solution {
-    private:
-    void solve(TreeNode* root,int targetsum,int sum,bool &ans)
-    {
-        if(root == NULL)
-        {
-            
-            return ;
+private:
+    void solve(TreeNode* root, int target, int sum, bool& flag){
+        if(root==NULL) return ;
+        sum+=root->val;
+        if(sum==target && root->left==NULL && root->right==NULL){
+            flag = true;
         }
-        
-        sum = sum+root->val;
-        if(sum == targetsum && (root->left == NULL && root->right == NULL))
-        {
-            ans = true;
-        }
-        solve(root->left,targetsum,sum,ans);
-        solve(root->right,targetsum,sum,ans);
-        
+        solve(root->left, target, sum, flag);
+        solve(root->right, target, sum, flag);
     }
-    
-    
 public:
     bool hasPathSum(TreeNode* root, int targetSum) {
-        if(root == NULL)
-        {
-            return false;
-        }
-        
-        bool ans = false;
-        solve(root,targetSum,0,ans);
-        return ans;
-        
+        int sum = 0;
+        bool flag = false;
+        solve(root, targetSum, sum, flag);
+        return flag;
     }
 };
