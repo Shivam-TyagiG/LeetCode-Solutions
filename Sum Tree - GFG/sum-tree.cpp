@@ -95,39 +95,31 @@ struct Node
 class Solution
 {
     private:
-    pair<bool,int> sum(Node* root)
-    {
-        if(root == NULL)
-        {
-            pair<bool,int> p = make_pair(true,0);
-            return p;
+        pair<bool, int> solve(Node* root){
+            if(root == NULL) return {true,0};
+            if(root->left==NULL && root->right==NULL) return {true, root->data};
+            pair<bool, int> left = solve(root->left);
+            pair<bool, int> right = solve(root->right);
+            bool op1 = left.first;
+            bool op2 = left.first;
+            int sum = left.second+ right.second;
+            pair<bool, int> ans;
+            if(op1 && op2 && sum==root->data){
+                ans.first = true;
+                ans.second = 2*sum;
+            }
+            else{
+                ans.first = false;
+                ans.second = 2*sum;
+            }
+            return ans;
         }
-        if(root->left ==  NULL && root->right == NULL)
-        {
-            pair<bool,int> p = make_pair(true,root->data);
-            return p;
-        }
-        
-        pair<bool,int> left = sum(root->left);
-        pair<bool,int> right = sum(root->right);
-        bool l = left.first;
-        bool r = right.first;
-        bool diff = left.second + right.second == root->data;
-        pair<bool,int> ans;
-        if(l && r && diff)
-        {
-            ans.first = true;
-            ans.second = root->data*2;
-        }
-        else{
-            ans.first = false;
-        }
-        return ans;
-    }
     public:
     bool isSumTree(Node* root)
     {
-         return sum(root).first;
+         // Your code here
+         pair<bool, int> s = solve(root);
+         return s.first;
     }
 };
 
