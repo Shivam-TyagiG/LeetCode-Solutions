@@ -65,33 +65,28 @@ struct Node
 };*/
 
 //Function to return a tree created from postorder and inoreder traversals.
-void createmap(int in[],map<int,int> &mapping,int n)
-{
-    for(int i=0;i<n;i++)
-    {
-        mapping[in[i]] = i;
+int find_position(int in[], int element, int size){
+    for(int i=0; i<size; i++){
+        if(in[i] == element) return i;
     }
+    return element;
 }
-Node* solve(int in[],int post[],int inorderstart,int inorderend,int postorderstart,int &postorderend, map<int,int> &mapping)
-{
-    if(postorderend < 0 || inorderstart > inorderend)
-    {
-        return NULL;
-    }
-    
-    int element = post[postorderend--];
+Node* construct(int in[], int post[], int inStart, int inEnd, int posStart, int& posEnd, int size){
+    if(inStart>inEnd || posStart>posEnd) return NULL;
+    int element = post[posEnd];
+    posEnd--;
     Node* root = new Node(element);
-    int position = mapping[element];
-    
-    //recursive call
-    root->right = solve(in, post, position+1,inorderend,postorderstart,postorderend,mapping);
-    root->left = solve(in, post, inorderstart,position-1,postorderstart,postorderend,mapping);
-    return root;
+    int position =  find_position(in, element, size);
+    root->right = construct(in, post, position+1, inEnd, posStart, posEnd, size);
+    root->left = construct(in, post, inStart, position-1, posStart, posEnd, size);
 }
 Node *buildTree(int in[], int post[], int n) {
-    map<int,int> mapping;
-    createmap(in,mapping,n);
-    int postorderend = n-1;
-    Node* ans = solve(in , post, 0, n-1, 0, postorderend, mapping);
-    return ans;
+    // Your code here
+    int inStart = 0;
+    int inEnd = n-1;
+    int posStart = 0;
+    int posEnd = n-1;
+    return construct(in, post, inStart, inEnd, posStart, posEnd, n);
+    
+    
 }
