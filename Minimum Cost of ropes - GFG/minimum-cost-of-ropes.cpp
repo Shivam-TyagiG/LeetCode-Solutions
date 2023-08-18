@@ -10,24 +10,24 @@ class Solution
     //Function to return the minimum cost of connecting the ropes.
     long long minCost(long long arr[], long long n) {
         // Your code here
-        priority_queue<long long ,vector<long long> ,greater<long long>> pq;
-        for(long long i = 0;i<n;i++)
-        {
-            pq.push(arr[i]);
+        long long ans  = 0;
+        priority_queue<long long, vector<long long>, greater<long long> > p;
+        for(int i=0; i<n; i++){
+            p.push(arr[i]);
         }
-        long long cost = 0;
-        while(pq.size()  > 1)
-        {
-            long long  first = pq.top();
-            pq.pop();
-            long long second  = pq.top();
-            pq.pop();
-            long long  sum  = first+second;
-            pq.push(sum);
-            cost = cost+sum;
+        long long sum = 0;
+        while(p.size()>1){
+            long long top1 = p.top();
+            p.pop();
+            long long top2 = p.top();
+            p.pop();
+            sum+=top1+top2;
+            // cout<<sum<<endl;
+            p.push(top1+top2);
         }
-        return cost;
+        return sum;
     }
+    
 };
 
 
