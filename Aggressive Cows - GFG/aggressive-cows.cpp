@@ -8,36 +8,35 @@ using namespace std;
 // User function Template for C++
 
 class Solution {
-    private:
-    bool possible(int n, int k, vector<int> &stalls, int mid){
+public:
+    bool possible(int n, int k, vector<int>& arr, int mid){
         int count = 1;
-        int previous=0;
+        int lastcow = 0;
         for(int i=0; i<n; i++){
-            if( stalls[i]-stalls[previous] >= mid){
-                previous=i;
+            if(arr[i]-arr[lastcow]>=mid){
                 count++;
                 if(count==k) return 1;
+                lastcow = i;
             }
         }
-        return 0;
+        return false;
     }
-public:
     int solve(int n, int k, vector<int> &stalls) {
-        int l=0, h=1e9+1;
-        int maximum_space = -1;
+    
+        // Write your code here
         sort(stalls.begin(), stalls.end());
-        while(l<=h){
-            int mid = l+(h-l)/2;
+        int low = 0, high = stalls[n-1]-stalls[0];
+        int ans = -1;
+        while(low<=high){
+            int mid = low+(high-low)/2;
             if(possible(n, k, stalls, mid)){
-                l=mid+1;
-                maximum_space=mid;
-            }
-            else{
-                h = mid-1;
+                ans = mid;
+                low = mid+1;
+            }else{
+                high = mid-1;
             }
         }
-        
-        return maximum_space;
+        return ans;
     }
 };
 
