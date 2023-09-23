@@ -10,43 +10,43 @@ using namespace std;
 
 class Solution
 {
-    private:
-        bool possible(int arr[], long long n, long long  k, long long  mid){
-            long long  sum = 0;
-            long long count = 1;
-            for(long long i=0; i<n; i++){
-                if(sum+arr[i]<=mid){
-                    sum+=arr[i];
-                }
-                else{
-                    count++;
-                    if(count>k||arr[i]>mid) return 0;
-                    sum=arr[i];
-                }
-            }
-            return 1;
-        }
   public:
-    long long minTime(int arr[], int n, int k)
-    {
-        // code here
-        long long l=0, h=0;
-        for(long long i=0; i<n; i++){
-            h+=arr[i];
-        }
-        long long minimum_time=-1;
-        while(l<=h){
-            long long  mid = l+(h-l)/2;
-            if(possible(arr, n, k, mid)){
-                minimum_time=mid;
-                h=mid-1;
+    long long find_sum(int arr[], int n){
+        long long sum = 0;
+        for(int i=0; i<n; i++) sum+=arr[i];
+        return sum;
+    }
+    
+    bool possible(int arr[], int n, int k, long long mid){
+        int count = 1;
+        long long sum = 0;
+        for(int i=0; i<n; i++){
+            if(sum+arr[i]<=mid){
+                sum+=arr[i];
             }
             else{
-                l = mid+1;
+                count++;
+                if(count>k || arr[i]>mid) return false;
+                sum=arr[i];
             }
         }
-        return minimum_time;
-        // return minimum time
+        return true;
+    }
+    long long minTime(int arr[], int n, int k)
+    {
+        long long low = 0, high = find_sum(arr, n);
+        long long ans = 0;
+        while(low<=high){
+            long long mid = low+(high-low)/2;
+            if(possible(arr, n, k, mid)){
+                ans = mid;
+                high = mid-1;
+            }
+            else{
+                low = mid+1;
+            }
+        }
+        return ans;
     }
 };
 
