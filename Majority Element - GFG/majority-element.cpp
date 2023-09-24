@@ -17,25 +17,22 @@ class Solution{
     {
         
         // your code here
+        int ansIndex = 0;
         int count = 1;
-        int majority = a[0];
         for(int i=1; i<size; i++){
-            if(majority == a[i]) count++;
-            else{
-                count--;
-                if(count <= 0){
-                    majority = a[i];
-                    count = 1;
-                }
+            if(a[i]==a[ansIndex]) count++;
+            else count--;
+            if(count==0){
+                ansIndex = i;
+                count=1;
             }
         }
-        count = 0;
+        count=0;
         for(int i=0; i<size; i++){
-            if(majority == a[i]) count++;
+            if(a[i]==a[ansIndex]) count++;
         }
-        if(count>size/2) return majority;
+        if(count>size/2) return a[ansIndex];
         return -1;
-        
     }
 };
 
