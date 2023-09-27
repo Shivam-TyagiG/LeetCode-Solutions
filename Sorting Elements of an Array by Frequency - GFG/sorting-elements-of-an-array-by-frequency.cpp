@@ -7,7 +7,7 @@ using namespace std;
 struct triplet{
     int freq;
     int  num;
-    int index;
+
 };
 
 bool cmp(triplet& a, triplet& b){
@@ -40,7 +40,6 @@ int main() {
 	        triplet t;
 	        t.freq = frequency[arr[i]];
 	        t.num = arr[i];
-	        t.index = i;
 	        m.push_back(t);
 	    }
 	    sort(m.begin(), m.end(), cmp);
