@@ -9,86 +9,47 @@ using namespace std;
 // User function template for C++
 
 class Solution{
-    private:
-    bool issafe(int x,int y,int n,vector<vector<int>> visited,vector<vector<int>> m)
-    {
-        if((x>=0 && x<n) && (y>=0 && y<n) && visited[x][y] == 0 && m[x][y]==1)
-        {
-            return true;
-        }
-        else{
-            return false;
-        }
+    public:
+    bool issafe(vector<vector<int>> &m, vector<vector<int>> &mapping, int& n, int x, int y){
+        if(x>=0 && y>=0 && x<n && y<n && mapping[x][y]==0 && m[x][y]==1) return 1;
+        return 0;
     }
-    private:
-    void solve(vector<string> &ans,vector<vector<int>> &m,string output,int i,int j,int n,vector<vector<int>> visited )
-    {
-        if(i==n-1 && j==n-1)
-        {
+    void solve(vector<vector<int>> &m, vector<vector<int>> &mapping, int& n, int newx[], int newy[], int x, int y, vector<string>& ans, string& output, char pos[]){
+        
+        if(x==n-1 && y==n-1){
             ans.push_back(output);
             return ;
         }
-        visited[i][j]=1;
-        //4 choice-D,L,R,U
-        //Down
-        int newi = i+1;
-        int newj = j;
-        if(issafe(newi,newj,n,visited,m))
-        {
-            output.push_back('D');
-            solve(ans,m,output,newi,newj,n,visited);
-            output.pop_back();
-        }
-        //left
-        newi = i;
-        newj = j-1;
-        if(issafe(newi,newj,n,visited,m))
-        {
-            output.push_back('L');
-            solve(ans,m,output,newi,newj,n,visited);
-            output.pop_back();
-        }
-        
-        //right
-        newi = i;
-        newj = j+1;
-        if(issafe(newi,newj,n,visited,m))
-        {
-            output.push_back('R');
-            solve(ans,m,output,newi,newj,n,visited);
-            output.pop_back();
-        }
-        
-        //up
-        newi = i-1;
-        newj = j;
-        if(issafe(newi,newj,n,visited,m))
-        {
-            output.push_back('U');
-            solve(ans,m,output,newi,newj,n,visited);
-            output.pop_back();
-        }
-    }
-    public:
-    vector<string> findPath(vector<vector<int>> &m, int n) {
-        vector<string> ans;
-        if(m[0][0]==0)
-        {
-            return ans;
-        }
-        string output = "";
-        int i=0,j=0;
-        vector<vector<int>> visited = m;
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                visited[i][j]=0;
+        if(x>=n || y>=n) return ;
+        mapping[x][y] = 1;
+        for(int i=0; i<4; i++){
+            if(issafe(m, mapping, n, x+newx[i], y+newy[i])){
+                output.push_back(pos[i]);
+                solve(m, mapping, n, newx, newy, x+newx[i], y+newy[i], ans, output, pos);
+                output.pop_back();
             }
         }
-        solve(ans,m,output,i,j,n,visited);
-        sort(ans.begin(),ans.end());
+        mapping[x][y]=0;
+    }
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        int newx[4] = {1, -1, 0, 0};
+        int newy[4] = {0, 0, -1, +1};
+        char pos[4] = {'D', 'U', 'L', 'R'};
+        vector<string> ans;
+        if(m[0][0]==0) return ans;
+        string output = "";
+        int x = 0;
+        int y = 0;
+        vector<vector<int>> mapping(n, vector<int>(n, 0));
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                mapping[i][j]=0;
+            }
+        }
+        solve(m, mapping, n, newx, newy, x, y, ans, output, pos);
         return ans;
+        
     }
 };
 
