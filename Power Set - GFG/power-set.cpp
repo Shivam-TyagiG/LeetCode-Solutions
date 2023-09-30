@@ -4,26 +4,25 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution{
-    private:
-        void solve(string& s, vector<string>& ans, string output, int i){
-            if(i>=s.length()){
-                if(output.length()==0) return ;
-                ans.push_back(output);
-                return ;
-            }
-            //exclude
-            solve(s, ans, output, i+1);
-            //include
-            output+=s[i];
-            solve(s, ans, output, i+1);
-}
 	public:
+	void solve(string& s, string& output, vector<string>& ans, int i){
+	    if(i>=s.length()){
+	        if(output.length()==0) return ;
+	        ans.push_back(output);
+	        return ;
+	    }
+	    //exclude
+	    solve(s, output, ans, i+1);
+	    //include
+	    output.push_back(s[i]);
+	    solve(s, output, ans, i+1);
+	    output.pop_back();
+	}
 		vector<string> AllPossibleStrings(string s){
 		    // Code here
+		    string output="";
 		    vector<string> ans;
-		    string output;
-		    int i=0;
-		    solve(s, ans, output, i);
+		    solve(s, output, ans, 0);
 		    sort(ans.begin(), ans.end());
 		    return ans;
 		}
