@@ -13,7 +13,40 @@ public:
     }
 public:
     Node* copyRandomList(Node* head) {
-
+        
+        
+        //Method 2 
+        if(head==NULL) return NULL;
+        Node* clonehead = new Node(head->val);
+        Node* temp1 = clonehead;
+        Node* temp2 = head->next;;
+        while(temp2!=NULL){
+            temp1->next = new Node(temp2->val);
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+        
+        unordered_map<Node*, Node*> old_to_new_node;
+        temp2 = head;
+        temp1 = clonehead;
+        while(temp2!=NULL){
+            old_to_new_node[temp2] = temp1;
+            temp2 = temp2->next;
+            temp1 = temp1->next;
+        }
+        
+        temp1 = clonehead;
+        temp2 = head;
+        while(temp2!=NULL){
+            temp1->random = old_to_new_node[temp2->random];
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+        return clonehead;
+        
+        /*
+        
+        
         //first step
         //craete a clone node
         if(head==NULL) return NULL;
@@ -68,6 +101,8 @@ public:
             clonenode=clonenode->next;
         }
         return clonehead;
+        
+        */
         
     }
 };
