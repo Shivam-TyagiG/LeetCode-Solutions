@@ -10,22 +10,22 @@ using namespace std;
 
 class Solution{
 public:
-    void insert_at_bottom(stack<int>& s, int data){
+    void push_at_bottom(stack<int>& s, int& top){
         if(s.empty()){
-            s.push(data);
+            s.push(top);
             return ;
         }
-        int d = s.top();
+        int e = s.top();
         s.pop();
-        insert_at_bottom(s, data);
-        s.push(d);
+        push_at_bottom(s, top);
+        s.push(e);
     }
     void Reverse(stack<int> &St){
         if(St.empty()) return ;
         int top = St.top();
         St.pop();
         Reverse(St);
-        insert_at_bottom(St, top);
+        push_at_bottom(St, top);
     }
 };
 
