@@ -105,27 +105,22 @@ class Solution{
     public:
     //Function to check whether a binary tree is balanced or not.
     pair<bool,int> solve(Node* root){
-        if(root==NULL) return {true, 0};
+        if(root == NULL) return {true, 0};
         pair<bool, int> left = solve(root->left);
         pair<bool, int> right = solve(root->right);
-        bool op1 = left.first;
-        bool op2 = right.first;
-        bool op3 = abs(left.second-right.second)<=1;
+        int op1 = left.first;
+        int op2 = right.first;
+        int op3 = abs(left.second - right.second) <= 1;
         pair<bool, int> ans;
-        ans.second = max(left.second,right.second)+1;
-        if(op1 && op2 && op3){
-            ans.first = 1;
-        }
-        else{
-            ans.first = 0;
-        }
+        ans.second = max(left.second, right.second) +1;
+        if(op1 && op2 && op3) ans.first = true;
+        else ans.second = false;
         return ans;
     }
     bool isBalanced(Node *root)
     {
         //  Your Code here
-        pair<bool, int> s = solve(root);
-        return s.first;
+        return solve(root).first;
     }
 };
 
