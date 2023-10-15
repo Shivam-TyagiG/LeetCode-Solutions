@@ -93,49 +93,33 @@ struct Node
 
 class Solution {
   public:
-  /*int height(Node* root)
-  {
-      if(root == NULL)
-      {
-          return NULL;
-      }
-      int left = height(root->left);
-      int right = height(root->right);
-      return max(left,right)+1;
-  }
-  */
-  pair<int,int> diameterfast(Node* root)
-  {
-      if(root == NULL)
-      {
-          return make_pair(0,0);
-      }
-      pair<int,int> left = diameterfast(root->left);
-      pair<int,int> right = diameterfast(root->right);
-      int op1 = left.first;
-      int op2 = right.first;
-      int op3 = left.second+right.second+1;
-      return make_pair(max(op1,max(op2,op3)),max(left.second,right.second)+1);
-  }
     // Function to return the diameter of a Binary Tree.
+    // int height(Node* root){
+    //     if(root==NULL) return 0;
+    //     int left = height(root->left);
+    //     int right = height(root->right);
+    //     return max(left, right)+1;
+    // }
+    
+    pair<int, int> solve(Node* root){
+        if(root==NULL) return {0, 0};
+        pair<int, int> left = solve(root->left);
+        pair<int, int> right = solve(root->right);
+        int dia1 = left.first;
+        int dia2 = right.first;
+        int dia3 = left.second + right.second +1;
+        return {max(max(dia1, dia2), dia3), max(left.second, right.second)+1};
+    }
     int diameter(Node* root) {
-        
-        /*
-        if(root == NULL)
-        {
-            return 0;
-        }
-        
-        int op1  = diameter(root->left);
-        int op2 = diameter(root->left);
         // Your code here
-        int op3 = height(root->left) + 1 + height(root->right);
-        return max(op1,max(op2,op3));
-        */
+        // if(root==NULL) return 0;
+        // int left = diameter(root->left);
+        // int right = diameter(root->right);
+        // int dia = height(root->left)+ height(root->right)+1;
+        // return max(max(left, right), dia);
         
-        
-        return diameterfast(root).first;
-        
+        pair<int,int> ans = solve(root);
+        return ans.first;
     }
 };
 
