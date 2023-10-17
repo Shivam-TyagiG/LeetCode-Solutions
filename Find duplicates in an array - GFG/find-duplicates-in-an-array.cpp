@@ -5,16 +5,18 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
   public:
-    vector<int> duplicates(int arr[], int n) {
+    vector<int> duplicates(long long arr[], int n) {
         // code here
-        unordered_map<int, int> m;
         vector<int> ans;
+        vector<long long> freq(n, 0);
+        for(int i=0; i<n; i++) freq[i] = 0;
         for(int i=0; i<n; i++){
-            m[arr[i]]++;
-            if(m[arr[i]]==2) ans.push_back(arr[i]);
+            freq[arr[i]]++;
         }
-        sort(ans.begin(), ans.end());
-        if(ans.size()==0) ans.push_back(-1);
+        for(int i=0; i<n; i++){
+            if(freq[i]>1)ans.push_back(i);
+        }
+        if(ans.size()==0){ans.push_back(-1); return ans;}
         return ans;
     }
 };
@@ -27,7 +29,7 @@ int main() {
     while (t-- > 0) {
         int n;
         cin >> n;
-        int a[n];
+        long long a[n];
         for (int i = 0; i < n; i++) cin >> a[i];
         Solution obj;
         vector<int> ans = obj.duplicates(a, n);
