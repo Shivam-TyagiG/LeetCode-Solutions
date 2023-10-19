@@ -103,24 +103,25 @@ struct Node
 
 class Solution{
     public:
-    //Function to check whether a binary tree is balanced or not.
-    pair<bool,int> solve(Node* root){
-        if(root == NULL) return {true, 0};
-        pair<bool, int> left = solve(root->left);
-        pair<bool, int> right = solve(root->right);
-        int op1 = left.first;
-        int op2 = right.first;
-        int op3 = abs(left.second - right.second) <= 1;
-        pair<bool, int> ans;
-        ans.second = max(left.second, right.second) +1;
-        if(op1 && op2 && op3) ans.first = true;
-        else ans.second = false;
-        return ans;
-    }
     bool isBalanced(Node *root)
     {
-        //  Your Code here
-        return solve(root).first;
+        return Balanced(root).first;
+    }
+    pair<int,int> Balanced(Node *root)
+    {
+        if(root==NULL) return {true, 0};
+        pair<int,int> left = Balanced(root->left);
+        pair<int,int> right = Balanced(root->right);
+        int lefti = left.second;
+        int righti = right.second;
+        pair<int,int> ans;
+        int con1 = left.first;
+        int con2 = right.first;
+        int con3 = abs(lefti-righti) <= 1 ? true : false;
+        if(con1 && con2 && con3) ans.first = true;
+        else ans.first = false;
+        ans.second = max(lefti, righti) +1;
+        return ans;
     }
 };
 
