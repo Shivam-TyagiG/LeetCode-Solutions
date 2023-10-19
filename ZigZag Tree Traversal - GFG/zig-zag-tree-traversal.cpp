@@ -102,50 +102,34 @@ struct Node {
 
 class Solution{
     public:
-    
     //Function to store the zig zag order traversal of tree in a list.
     vector <int> zigZagTraversal(Node* root)
     {
-        vector<int> answ;
-        
-        if(root == NULL)
-        {
-            return answ;
-        }
-        queue<Node*> q;
-        q.push(root);
-        bool ltr = true;
-        while(!q.empty())
-        {
-            int size = q.size();
-            vector<int> ans(size);
-            for(int i=0;i<size;i++)
-            {
-                Node* frontnode = q.front();
-                q.pop();
-                int index = ltr?i:size-i-1;
-                ans[index] = frontnode->data;
-                if(frontnode->left)
-                {
-                    q.push(frontnode->left);
-                }
-                if(frontnode->right)
-                {
-                    q.push(frontnode->right);
-                }
-               
-            }
-             ltr = !ltr;
-            for(auto i:ans)
-            {
-                answ.push_back(i);
-                
-            }
-            
-        }
-        return answ;
+    	// Code here
+    	vector<int> ans;
+    	queue<Node*> q;
+    	q.push(root);
+    	if(root==NULL) return ans;
+    	bool left = true;
+    	while(!q.empty()){
+    	    int size = q.size();
+    	    vector<int> output(size);
+    	    for(int i=0; i<size; i++){
+    	        Node* node = q.front();
+    	        q.pop();
+    	        if(node->left) q.push(node->left);
+    	        if(node->right) q.push(node->right);
+    	        if(left) output[i] = node->data;
+    	        else output[size-i-1]  = node->data;
+    	    }
+    	    for(int i=0; i<size; i++){
+    	        ans.push_back(output[i]);
+    	    }
+    	    
+    	    left = !left;
+    	}
+    	return ans;
     }
-    
 };
 
 //{ Driver Code Starts.
