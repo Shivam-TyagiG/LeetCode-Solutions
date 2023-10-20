@@ -82,91 +82,93 @@ Node *buildTree(string str) {
 // } Driver Code Ends
 //User function Template for C++
 
+/*
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
 class Solution {
-    public:
-    Node* createParentMapping(Node* root,int target,map<Node*,Node*> &nodetoparent)
-    {
-        Node* res = NULL;
+  public:
+    Node*  mapping(Node* root, map<Node*, Node*>& m, int target){
+        if(root==NULL) return NULL;
+        
         queue<Node*> q;
         q.push(root);
-        while(!q.empty())
-        {
+        m[root]  = NULL;
+        
+        Node* ans = NULL;
+        
+        while(!q.empty()){
             Node* front = q.front();
             q.pop();
-            if(front->data == target)
-            {
-                res = front;
-            }
-            if(front->left)
-            {
-                nodetoparent[front->left] = front;
+            
+            if(front->left){
+                m[front->left] = front;
                 q.push(front->left);
             }
-            if(front->right)
-            {
-                nodetoparent[front->right] = front;
+            
+            if(front->right){
+                m[front->right] = front;
                 q.push(front->right);
             }
             
+            if(front->data == target){
+                ans = front;
+            }
         }
-        return res;
+        return ans;
     }
-    int  burnTree(Node* root,map<Node*,Node*> nodetoparent)
+    int minTime(Node* root, int target) 
     {
-        int ans=0; 
-        map<Node*,bool> visited;
-        queue<Node*> q;
-        q.push(root);
-        visited[root] = true;
+        // Your code goes here
+        if(root==NULL) return 0;
+        map<Node*, Node*> node_to_parent;
+        map<Node*, bool> visited;
         
-        while(!q.empty())
-        {
-            bool flag = 0;
+        Node* node = mapping(root, node_to_parent, target);
+        
+        queue<Node*> q;
+        q.push(node);
+        visited[node] = 1;
+        
+        int count = 0;
+        
+        while(!q.empty()){
             int size = q.size();
-            for(int i=0;i<size;i++)
+            bool flag = 0;
+            for(int i=0; i<size; i++)
             {
                 Node* front = q.front();
                 q.pop();
-                if(front->left && !visited[front->left])
-                {
-                    flag= 1;
+                
+                if(front->left && !visited[front->left]){
+                    flag = 1;
                     q.push(front->left);
-                    visited[front->left]=true;
+                    visited[front->left] = 1;
                 }
-                if(front->right && !visited[front->right])
-                {
-                    flag= 1;
+                if(front->right && !visited[front->right]){
+                    flag = 1;
                     q.push(front->right);
-                    visited[front->right]=true;
+                    visited[front->right] = 1;
                 }
-                if(nodetoparent[front] && !visited[nodetoparent[front]])
-                {
-                    flag= 1;
-                    q.push(nodetoparent[front]);
-                    visited[nodetoparent[front]]=true;
+                if(node_to_parent[front] && !visited[node_to_parent[front]]){
+                    flag = 1;
+                    q.push(node_to_parent[front]);
+                    visited[node_to_parent[front]] = 1;
                 }
             }
-            if(flag == 1)
-            {
-                ans++;
-            }
+            if(flag) count++;
             
         }
-        return ans;
         
-    }
-  public:
-    int minTime(Node* root, int target) 
-    {
-        //create mapping node to parent 
-        //find target node
-        //burn the tree in min time
-        int ans = 0;
-        map<Node*,Node*> nodetoparent;
-        Node* targetNode = createParentMapping(root,target,nodetoparent);
-        return burnTree(targetNode,nodetoparent);
-        
-        // Your code goes here
+        return count ;
     }
 };
 
