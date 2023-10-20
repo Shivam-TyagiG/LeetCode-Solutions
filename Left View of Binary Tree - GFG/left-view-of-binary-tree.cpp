@@ -138,7 +138,7 @@ void left_trav(Node* root, vector<int>& ans){
         else left_trav(root->right, ans);
 }
 
-void trav_left(Node* root, vector<int>& ans){
+    void trav_left(Node* root, vector<int>& ans){
         queue<Node*> q;
         if(root==NULL) return ;
         q.push(root);
@@ -153,12 +153,20 @@ void trav_left(Node* root, vector<int>& ans){
             }
         }
     }
+    
+    void left_trav(Node* root, vector<int>& ans, int level){
+        if(root==NULL) return ;
+        if(level == ans.size()) ans.push_back(root->data);
+        left_trav(root->left, ans, level+1);
+        left_trav(root->right, ans, level+1);
+    }
 
 vector<int> leftView(Node *root)
 {
    // Your code here
     vector<int> ans;
     if(root==NULL) return ans;
-    trav_left(root, ans);
+    // trav_left(root, ans);
+    left_trav(root, ans, 0);
     return ans;
 }
