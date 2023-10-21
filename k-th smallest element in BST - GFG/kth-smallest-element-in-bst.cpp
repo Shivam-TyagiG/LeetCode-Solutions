@@ -98,14 +98,29 @@ class Solution {
         if(root==NULL) return ;
         solve(root->left, element);
         element.push_back(root->data);
+        
         solve(root->right, element);
     }
+    
+    void solve(Node* root, int& element, int& count, int& k){
+        if(root==NULL) return ;
+        solve(root->left, element, count, k);
+        count++;
+        if(count  == k) element = root->data;
+        
+        solve(root->right, element, count, k);
+    }
     int KthSmallestElement(Node *root, int K) {
-        // add code here.
-        vector<int> element;
-        solve(root, element);
-        if(K>element.size()) return -1;
-        return element[K-1];
+        // vector<int> element;
+        // solve(root, element);
+        // if(K>element.size()) return -1;
+        // return element[K-1];
+        
+        int element=-1;
+        int count = 0;
+        solve(root, element, count, K);
+        return element;
+        
     }
 };
 
