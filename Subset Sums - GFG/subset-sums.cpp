@@ -12,10 +12,11 @@ private:
             return ;
         }
         
-        //exclude
-        solve(arr, ans, n, i+1, sum);
         //include
         sum+=arr[i];
+        solve(arr, ans, n, i+1, sum);
+        //exclude
+        sum-=arr[i];
         solve(arr, ans, n, i+1, sum);
     }
 public:
