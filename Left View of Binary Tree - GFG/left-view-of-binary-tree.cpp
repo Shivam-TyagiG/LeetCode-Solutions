@@ -128,45 +128,17 @@ struct Node
  */
 
 //Function to return a list containing elements of left view of the binary tree.
-void left_trav(Node* root, vector<int>& ans){
-        if(root==NULL) return ;
-        // if(!root->left && !root->right) return ;
-        
+void solve(Node* root, vector<int>& ans, int level){
+    if(root==NULL) return ;
+    if(ans.size()==level)
         ans.push_back(root->data);
-        
-        if(root->left) left_trav(root->left, ans);
-        else left_trav(root->right, ans);
+    solve(root->left, ans, level+1);
+    solve(root->right, ans, level+1);
 }
-
-    void trav_left(Node* root, vector<int>& ans){
-        queue<Node*> q;
-        if(root==NULL) return ;
-        q.push(root);
-        while(!q.empty()){
-            int size = q.size();
-            for(int i=0; i<size; i++){
-                Node* front = q.front();
-                q.pop();
-                if(front->left) q.push(front->left);
-                if(front->right) q.push(front->right);
-                if(i == 0) ans.push_back(front->data);
-            }
-        }
-    }
-    
-    void left_trav(Node* root, vector<int>& ans, int level){
-        if(root==NULL) return ;
-        if(level == ans.size()) ans.push_back(root->data);
-        left_trav(root->left, ans, level+1);
-        left_trav(root->right, ans, level+1);
-    }
-
 vector<int> leftView(Node *root)
-{
+{ 
    // Your code here
-    vector<int> ans;
-    if(root==NULL) return ans;
-    // trav_left(root, ans);
-    left_trav(root, ans, 0);
-    return ans;
+   vector<int> ans;
+   solve(root, ans, 0);
+   return ans;
 }
