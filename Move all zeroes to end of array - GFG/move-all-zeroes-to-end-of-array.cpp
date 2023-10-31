@@ -8,17 +8,17 @@ class Solution{
 public:
 	void pushZerosToEnd(int arr[], int n) {
 	    // code here
-	    int count = 0;
-	    for(int i=0; i<n; i++){
-	        if(arr[i]==0) count++;
+	    int i=0;
+	    int j=0;
+	    while(j<n){
+	        if(arr[j]!=0){
+	            swap(arr[i], arr[j]);
+	            i++;
+	        }
+	        j++;
 	    }
-	    int k=0;
-	    for(int i=0; i<n; i++){
-	        if(arr[i]!=0) arr[k++]=arr[i];
-	        if(i>n-count-1) arr[i]=0;
-	    }
-	    
 	}
+	
 };
 
 //{ Driver Code Starts.
