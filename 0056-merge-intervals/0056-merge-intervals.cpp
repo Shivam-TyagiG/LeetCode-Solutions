@@ -5,7 +5,9 @@ public:
         sort(intervals.begin(), intervals.end());
         int mini = intervals[0][0];
         int maxi = intervals[0][1];
+        vector<int> output;
         for(int i=1 ;i<intervals.size(); i++){
+            output.clear();
             int currmini = intervals[i][0];
             int currmaxi = intervals[i][1];
             if(currmini<=maxi){
@@ -13,7 +15,6 @@ public:
                 maxi = max(maxi, currmaxi);
             }
             else{
-                vector<int> output;
                 output.push_back(mini);
                 output.push_back(maxi);
                 ans.push_back(output);
@@ -21,7 +22,7 @@ public:
                 maxi = currmaxi;
             }
         }
-        vector<int> output;
+        output.clear();
         output.push_back(mini);
         output.push_back(maxi);
         ans.push_back(output);
