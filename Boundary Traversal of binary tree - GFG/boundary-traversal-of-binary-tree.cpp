@@ -104,76 +104,50 @@ struct Node
 }; */
 
 class Solution {
-    
-    private:
-    void lefttrav(Node* root,vector<int> &ans)
-    {
-        if(root==NULL || (root->right == NULL && root->left == NULL))
-        {
-            return ;
-        }
+    void left_trev(Node* root, vector<int>& ans){
+        if(root == NULL) return ;
+        if(!root->left && !root->right) return ;
         ans.push_back(root->data);
-        if(root->left)
-        {
-            lefttrav(root->left,ans);
-        }
-        else{
-            lefttrav(root->right,ans);
-        }
+        if(root->left) left_trev(root->left, ans);
+        else left_trev(root->right, ans);
     }
     
+    void left_leaf(Node* root, vector<int>& ans){
+        if(root == NULL) return ;
+        if(!root->left && !root->right) ans.push_back(root->data);
+        left_leaf(root->left, ans);
+        left_leaf(root->right, ans);
+    }
     
-    void righttrav(Node* root,vector<int> &ans)
-    {
-        if(root==NULL || (root->right == NULL && root->left == NULL))
-        {
-            return ;
-        }
-        
-        if(root->right)
-        {
-            righttrav(root->right,ans);
-        }
-        else{
-            righttrav(root->left,ans);
-        }
+    void right_leaf(Node* root,vector<int>& ans){
+        if(root == NULL) return ;
+        if(!root->left && !root->right) ans.push_back(root->data); 
+        right_leaf(root->left, ans);
+        right_leaf(root->right, ans);
+    }
+    
+    void trev_right(Node* root, vector<int>& ans){
+        if(root == NULL) return ;
+        if(!root->left && !root->right) return ;
+        if(root->right) trev_right(root->right, ans);
+        else trev_right(root->left, ans);
         ans.push_back(root->data);
     }
-    
-    void leaf(Node* root,vector<int> &ans)
-    {
-        if(root == NULL)
-        {
-            return ;
-        }
-        if(root->left == NULL && root->right == NULL)
-        {
-            ans.push_back(root->data);
-            return ;
-        }
-        leaf(root->left,ans);
-        leaf(root->right,ans);
-        
-    }
-    
-    
-    
-    
 public:
     vector <int> boundary(Node *root)
     {
-        vector<int> ans;
-        if(root == NULL)
-        {
-            return ans;
-        }
-        ans.push_back(root->data);
-        lefttrav(root->left,ans);
-        leaf(root->left,ans);
-        leaf(root->right,ans);
-        righttrav(root->right,ans);
-        return ans;
         //Your code here
+        vector<int> ans;
+        if(root == NULL) return ans;
+        
+        ans.push_back(root->data);
+        
+        left_trev(root->left, ans);
+        left_leaf(root->left, ans);
+        right_leaf(root->right, ans);
+        trev_right(root->right, ans);
+        
+        return ans;
     }
 };
 
