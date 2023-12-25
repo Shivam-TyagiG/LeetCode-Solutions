@@ -23,4 +23,5 @@ bool isValid(char a,char b){
 bool isValid(char a){
     return a != '0';
 }
-    };
+
+};
