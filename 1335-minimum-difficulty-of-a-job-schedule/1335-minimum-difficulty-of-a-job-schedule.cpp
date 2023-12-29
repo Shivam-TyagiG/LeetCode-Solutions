@@ -1,6 +1,6 @@
 class Solution {
 public:
-   int dp[12][305];  //dp[d][i] is the answer that we have d days left, and we have finished all the tasks before arr[i](exclusive)
+    int dp[12][305];  //dp[d][i] is the answer that we have d days left, and we have finished all the tasks before arr[i](exclusive)
     vector<int> arr; 
     
     int maxquery(int i,int j) {  //return the maximum value of arr[i,j]
