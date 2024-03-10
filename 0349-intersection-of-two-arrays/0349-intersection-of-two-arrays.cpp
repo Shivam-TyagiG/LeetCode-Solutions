@@ -1,20 +1,19 @@
 class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-        
-        set<int> ans;
-        for(int i=0 ; i<nums1.size() ; i++)
-        {
-            for(int j=0 ; j<nums2.size() ; j++)
-            {
-                if(nums1[i]==nums2[j])
-                {
-                    ans.insert(nums1[i]);
-                }
+        vector<int> ans;
+        map<int, int> m;
+        for(int i=0; i<nums1.size(); i++){
+            m[nums1[i]]++;
+        }
+
+        map<int, int> c;
+        for(int i=0; i<nums2.size(); i++){
+            if(m.find(nums2[i])!=m.end() && c.find(nums2[i])==c.end()){
+                ans.push_back(nums2[i]);
+                c[nums2[i]]++;
             }
         }
-        vector<int> v(ans.begin(), ans.end());
-        return v;
-        
+        return ans;
     }
 };
